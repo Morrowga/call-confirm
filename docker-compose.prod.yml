@@ -1,0 +1,30 @@
+# PRODUCTION (EC2): only the app + Celery containers run here.
+# Postgres is AWS RDS and Redis is ElastiCache — external managed endpoints
+# provided via environment (never containers in prod).
+# Deploy: docker compose -f docker-compose.prod.yml up -d
+services:
+  api:
+    image: callconfirm:latest
+    build: .
+    restart: unless-stopped
+    environment:
+      - APP_ENV=production
+    env_file: /etc/callconfirm/.env      # EC2 instance env/secrets, not baked into image
+    ports:
+      - "8000:8000"
+
+  worker:
+    image: callconfirm:latest
+    restart: unless-stopped
+    command: celery -A app.tasks.celery_app.celery worker --loglevel=info --concurrency=4
+    environment:
+      - APP_ENV=production
+    env_file: /etc/callconfirm/.env
+
+  beat:
+    image: callconfirm:latest
+    restart: unless-stopped
+    command: celery -A app.tasks.celery_app.celery beat --loglevel=info
+    environment:
+      - APP_ENV=production
+    env_file: /etc/callconfirm/.env

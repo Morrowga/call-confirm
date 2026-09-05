@@ -1,0 +1,64 @@
+# --- Secrets / environment -------------------------------------------------
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# --- Python / FastAPI backend -----------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+*.pid
+
+# --- Alembic ------------------------------------------------------------
+# Keep migration scripts themselves; ignore local sqlite fallback DBs etc.
+*.sqlite3
+*.db
+
+# --- Node / React / Vite frontend -------------------------------------------
+node_modules/
+dist/
+dist-ssr/
+build/
+.vite/
+*.local
+.turbo/
+
+# --- Docker / data volumes ---------------------------------------------------
+data/
+pgdata/
+*.log
+logs/
+
+# --- IDE / editor ------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- OS ------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# --- Uploaded / generated at runtime (S3 recording cache, if ever local) ----
+uploads/
+recordings/
